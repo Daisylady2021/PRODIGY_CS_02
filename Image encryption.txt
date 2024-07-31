@@ -1,0 +1,64 @@
+import os
+
+def encrypt_decrypt_image(path, key, mode):
+    """
+    Encrypts or decrypts an image using a simple XOR cipher.
+
+    Args:
+        path: Path to the image file.
+        key: Encryption/decryption key.
+        mode: 'encrypt' or 'decrypt'.
+    """
+
+    if mode not in ['encrypt', 'decrypt']:
+        raise ValueError("Invalid mode. Must be 'encrypt' or 'decrypt'.")
+
+    try:
+        with open(path, 'rb') as fin:
+            image = bytearray(fin.read())
+
+        for index, value in enumerate(image):
+            image[index] = value ^ key
+
+        with open(path, 'wb') as fout:
+            fout.write(image)
+
+        print(f"{mode.capitalize()}ion Done...")
+
+    except Exception as e:
+        print(f"Error caught: {e.__name__}")
+
+
+def main():
+    path = r'C:\Users\Ephraim\Downloads\image - Copy.jpg'
+
+    while True:
+        print("\nImage Encryption/Decryption Menu")
+        print("-----------------------------------")
+        print("1. Encrypt Image")
+        print("2. Decrypt Image")
+        print("3. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            mode = 'encrypt'
+            break
+        elif choice == '2':
+            mode = 'decrypt'
+            break
+        elif choice == '3':
+            print("Exiting program...")
+            return
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
+
+    key = int(input("Enter Key: "))
+    print('The path of file : ', path)
+    print('Key for', mode, ': ', key)
+
+    encrypt_decrypt_image(path, key, mode)
+
+
+if __name__ == "__main__":
+    main()
